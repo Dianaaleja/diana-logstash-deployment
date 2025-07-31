@@ -1,0 +1,49 @@
+# ansible/roles/logstash_install/tasks/main.yml
+# Tasks to install and configure Java and Logstash.
+
+- name: Update system packages
+  ansible.builtin.yum:
+    name: "*"
+    state: latest
+  tags:
+    - update
+
+- name: Install Java
+  ansible.builtin.yum:
+    name: "{{ java_package }}"
+    state: present
+  tags:
+    - java
+
+- name: Add Logstash GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: "{{ logstash_gpg_key }}"
+  tags:
+    - logstash
+  
+- name: Add Logstash repository
+  ansible.builtin.yum_repository:
+    name: logstash-{{ logstash_version }}
+    description: "Elasticsearch repository for {{ logstash_version }} packages"
+    baseurl: "{{ logstash_repo_url }}"
+    gpgcheck: yes
+    gpgkey: "{{ logstash_gpg_key }}"
+    enabled: yes
+  tags:
+    - logstash
+
+- name: Install Logstash
+  ansible.builtin.yum:
+    name: logstash
+    state: present
+  tags:
+    - logstash
+  notify:
+    - restart logstash
+
+- name: Ensure Logstash service is started and enabled
+  ansible.builtin.systemd:
+    name: logstash
+    state: started
+    enabled: yes

@@ -1,0 +1,8 @@
+---
+# ansible/roles/logstash_install/handlers/main.yml
+# Handlers para el rol de instalación de Logstash.
+
+- name: restart logstash
+  ansible.builtin.systemd:
+    name: logstash
+    state: restarted

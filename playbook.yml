@@ -1,0 +1,11 @@
+---
+# ansible/playbook.yml
+# This playbook runs the Logstash installation role on the "logstash_servers" server group.
+
+- name: Install and configure Logstash
+  hosts: logstash_servers
+  become: yes  # Allows tasks to run as the root user (or with sudo)
+  gather_facts: yes
+  
+  roles:
+    - logstash_install

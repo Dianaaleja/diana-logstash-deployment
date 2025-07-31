@@ -1,0 +1,15 @@
+# ansible/roles/logstash_install/vars/main.yml
+# Variables for the Logstash installation role.
+
+# The Java package to install (Amazon Corretto is a good choice for AWS)
+java_package: java-17-amazon-corretto
+
+# Logstash version to install
+logstash_version: "8.12.2"
+
+# The official Logstash repository URL.
+logstash_repo_url: https://artifacts.elastic.co/packages/{{ logstash_version }}/yum
+
+# GPG key URL for the Logstash repository
+logstash_gpg_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
