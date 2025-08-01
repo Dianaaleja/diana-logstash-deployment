@@ -1,0 +1,15 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - eu-central-1        # Change to your region
+filters:
+  tag:Name:
+    - bastion
+    - logstash
+keyed_groups:
+  - key: tags.Name
+    prefix: ""
+hostnames:
+  - private_ip_address
+compose:
+  ansible_host: public_ip_address if 'bastion' in tags.Name else private_ip_address
+

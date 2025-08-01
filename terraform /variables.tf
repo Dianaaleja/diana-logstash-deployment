@@ -56,3 +56,8 @@ variable "my_public_ip" {
   # or using a service like: curl ifconfig.me
   # Example: "192.0.2.100"
 }
+variable "aws_profile" {
+  description = "The AWS profile to use for authentication."
+  type        = string
+  default     = "default"
+}

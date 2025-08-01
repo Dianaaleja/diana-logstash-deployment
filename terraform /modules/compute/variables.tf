@@ -38,14 +38,14 @@ variable "security_rules" {
       to_port         = number
       protocol        = string
       cidr_blocks     = list(string)
-      security_groups = optional(list(string)) # Optional: Allows referencing other SGs
+      security_groups = optional(list(string))
     }))
     egress = list(object({
       from_port       = number
       to_port         = number
       protocol        = string
       cidr_blocks     = list(string)
-      security_groups = optional(list(string)) # Optional
+      security_groups = optional(list(string))
     }))
   })
   default = {
@@ -53,7 +53,7 @@ variable "security_rules" {
     egress  = [{
       from_port   = 0
       to_port     = 0
-      protocol    = "-1" # All protocols
+      protocol    = "-1"
       cidr_blocks = ["0.0.0.0/0"]
     }]
   }
@@ -68,4 +68,11 @@ variable "environment" {
   description = "The environment name (e.g., dev, prod, staging)."
   type        = string
   default     = "dev"
+}
+
+# Variable nueva para las etiquetas
+variable "tags" {
+  description = "A map of tags to assign to the resources."
+  type        = map(string)
+  default     = {}
 }
